@@ -1,0 +1,15 @@
+.search-container {
+  position: relative;
+}
+
+.input-container {
+  position: relative;
+}
+
+.clear-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
