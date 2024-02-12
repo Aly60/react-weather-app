@@ -15,7 +15,7 @@ function App() {
     const forecastFatch = fetch(
       `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
     );
-    // handle the fetch requests
+    // handling the fetch requests
     Promise.all([currentWeatherFetch, forecastFatch])
       .then(async (response) => {
         const weatherResponse = await response[0].json();
@@ -32,7 +32,6 @@ function App() {
   const handleClearInput = () => {};
   console.log(currentWeather, forcast);
 
-  //jsx for rendring the components
   return (
     <div className="container">
       <Search

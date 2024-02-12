@@ -36,6 +36,8 @@ const Search = ({ onSearchChange, onClearClick }) => {
 
       return {
         options,
+
+        //error message to display if no options are
         noOptionsMessage: () => (
           <div className="noOPtionsMessage">
             {error ||
