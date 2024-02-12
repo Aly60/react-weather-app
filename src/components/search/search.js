@@ -6,14 +6,16 @@ import "./search-style.css";
 const Search = ({ onSearchChange, onClearClick }) => {
   //state to store the current search value
   const [search, setSearch] = useState(null);
+  const [error, setError] = useState(null);
   //fetch data from the api based on the input value
 
   const loadOptions = async (inputValue) => {
     try {
       if (inputValue === null || inputValue === "") {
-        // Return an empty array or handle it according to your requirements
+        setError("");
         return { options: [] };
       }
+      setError(null);
 
       //fetch city data from the specified api
       const response = await fetch(
@@ -22,9 +24,8 @@ const Search = ({ onSearchChange, onClearClick }) => {
       );
       if (!response.ok) {
         console.error("Error:", response.status);
-        return {
-          options: [],
-        };
+        setError("enter a valid city");
+        return { options: [] };
       }
       // transform the response data into the format expected by AsyncPaginate(it is a wrapper around select)
       const { data } = await response.json();
@@ -33,9 +34,18 @@ const Search = ({ onSearchChange, onClearClick }) => {
         label: `${city.name}, ${city.countryCode}`,
       }));
 
-      return { options };
+      return {
+        options,
+        noOptionsMessage: () => (
+          <div className="noOPtionsMessage">
+            {error ||
+              "Do you really not know any city name? Please enter a valid name."}
+          </div>
+        ),
+      };
     } catch (error) {
       console.error(error);
+      setError("enter a valid city");
       return { options: [] };
     }
   };
@@ -64,6 +74,10 @@ const Search = ({ onSearchChange, onClearClick }) => {
           value={search}
           onChange={handleOnChange}
           loadOptions={loadOptions}
+          noOptionsMessage={() =>
+            error ||
+            "Do you really not know any city name,Please enter a valid name?"
+          }
           style={{
             width: "200px",
             marginRight: "10px",
@@ -74,6 +88,7 @@ const Search = ({ onSearchChange, onClearClick }) => {
             X
           </button>
         )}
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

@@ -31,6 +31,7 @@ function App() {
   // event handler for clearing the input value and reset the weather data
   const handleClearInput = () => {};
   console.log(currentWeather, forcast);
+
   //jsx for rendring the components
   return (
     <div className="container">
